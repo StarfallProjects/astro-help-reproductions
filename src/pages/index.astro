@@ -1,16 +1,60 @@
 ---
-
+import SimpleForm from "../components/SimpleForm.astro"
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<h1> Astro help and reproductions</h1>
+
+<b>Problem:</b> <code>event.preventDefault()</code> doesn't work to prevent page reload on form submission when the form is in a component.
+<br />
+<b>Astro info:</b>
+
+<ul>
+<li> Astro: v4.14.6</li>
+<li> Nod: v20.12.2</li>
+<li> System: Windows (x64)</li>
+<li> Package Manager: npm</li>
+<li> Output: server</li>
+<li> Adapter: none</li>
+<li> Integrations: none</li>
+</ul>
+
+
+    
+<h2>This form and its script are directly on this page</h2>
+
+<ol>
+    <li>Type something in the filed</li>
+    <li>CLick <b>Submit</b></li>
+    <li>The page doesn't flicker/reload. The field doesn't clear.</li>
+</ol>
+
+<form method="POST">
+    <label>
+        Test field:
+        <input type="text" name="test" required />
+    </label>
+    <button>Submit</button>
+</form>
+
+<script>
+// Get the form reference
+const form = document.querySelector("form");
+
+if (form) {
+    // listen to the submit event of the form
+    form.addEventListener("submit", function (e) {
+    // Avoid to page flickering and deal with the form client side
+    e.preventDefault();
+    });
+}
+</script>
+
+<h2>This is the same form and script, pulled in from a component</h2>
+
+<ol>
+    <li>Type something in the filed</li>
+    <li>CLick <b>Submit</b></li>
+    <li>The page flickers/reloads and the field clears</li>
+</ol>
+
+<SimpleForm />
